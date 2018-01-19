@@ -46,7 +46,7 @@ public class MyJsonClient {
         		+ "Body:\n{4}\n");
 		
 		if (result == "ERROR"){
-			entity = "[\"Not found!\"]";
+			entity = "[ ]";
 		}
 		ObjectMapper objMapper = new ObjectMapper();
 		Object json = objMapper.readValue(entity, Object.class);
@@ -184,25 +184,24 @@ public class MyJsonClient {
 	        	result ="ERROR";
 	        }
 	        requestNumber = 5;
-	        
 	        printResponce(requestNumber, result, responseDelete, responseStr, path, requestType);
-	        	        
 	        
-    		// # 3.6. Request #6
+    		// Request #6
+	        // Step 3.6
 	        path = "activity_types";
 	        requestType = "GET";
-	        Response resp6 = service.path(path)
+	        resp = service.path(path)
 	        		.request()
 	        		.accept(MediaType.APPLICATION_JSON)
 	        		.header("Content-type","application/json").get();
-	        String response6 = resp6.readEntity(String.class);
+	        responseStr = resp.readEntity(String.class);
 
-	        JSONArray array6 = new JSONArray(response6);
-	        int activityTypeCount = array6.length();
+	        JSONArray activitiesArray = new JSONArray(responseStr);
+	        int activityTypeCount = activitiesArray.length();
 	      
-	        List<String> activityTypesList = new ArrayList<String>();
+	        List<String> activity_types = new ArrayList<String>();
 	        for (int i=0;i<activityTypeCount;i++) {
-	        	activityTypesList.add(array6.get(i).toString());
+	        	activity_types.add(activitiesArray.get(i).toString());
 	        }
 	        if(activityTypeCount > 2) {
 	        	result = "OK";
@@ -210,10 +209,51 @@ public class MyJsonClient {
 	        	result = "ERROR";
 	        }
 	        requestNumber = 6;
-	        printResponce(requestNumber, result, resp6, response6, path, requestType);
-	        System.out.println("List of activity types in the system:" + activityTypesList);
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
+	        System.out.println("List of activity types in the system:" + activity_types);
 	        
 	        
+	        // Request #6
+	        // Step 3.6
+	        int allActivitiesCount = 0;
+	        int[] peopleIds = {idFirstPerson, idLastPerson};
+	        int activity_id = -1;
+	        String activity_type = "";
+	        for (int id: peopleIds) {
+		        for (String activity: activity_types) {
+			        path = "person/" + Integer.toString(id) + '/' + activity;
+			        requestType = "GET";
+			        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+			        		.header("Content-type","application/json").get();
+			        responseStr = resp.readEntity(String.class);
+
+			        JSONArray personActivitiesArray = new JSONArray(responseStr);
+			        int activitiesCount = personActivitiesArray.length();
+			        if(activitiesCount > 0) {
+			        	allActivitiesCount += activitiesCount;
+			        	result = "OK";
+			        	activity_id = (int) personActivitiesArray.getJSONObject(0)
+			        												.get("idActivity");
+			        	activity_type = (String) personActivitiesArray.getJSONObject(0)
+																	.get("type");
+			        }else {
+			        	result = "ERROR";
+			        	responseStr = "{}";
+		        	}
+			        requestNumber = 6;
+			        printResponce(requestNumber, result, resp, responseStr, path, requestType);
+		        }
+	        }
+	        if (allActivitiesCount > 0) {
+	        	System.out.println("Request 7 is OK, there were "
+	        				+ Integer.toString(allActivitiesCount) + " activities.");
+	        	System.out.println("Selected activities: id: " + Integer.toString(activity_id)
+	        							+ " type: " + activity_type);
+	        } else {
+	        	System.out.println("Request 7 is ERROR!");
+	        }
+	        
+	        // Request #7
     	}
     	catch(Exception e) {
     		e.printStackTrace();
