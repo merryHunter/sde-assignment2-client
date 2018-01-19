@@ -213,11 +213,12 @@ public class MyJsonClient {
 	        System.out.println("List of activity types in the system:" + activity_types);
 	        
 	        
-	        // Request #6
-	        // Step 3.6
+	        // Request #7
+	        // Step 3.7
 	        int allActivitiesCount = 0;
 	        int[] peopleIds = {idFirstPerson, idLastPerson};
 	        int activity_id = -1;
+	        int idP = -1;
 	        String activity_type = "";
 	        for (int id: peopleIds) {
 		        for (String activity: activity_types) {
@@ -236,11 +237,12 @@ public class MyJsonClient {
 			        												.get("idActivity");
 			        	activity_type = (String) personActivitiesArray.getJSONObject(0)
 																	.get("type");
+			        	idP = id;
 			        }else {
 			        	result = "ERROR";
 			        	responseStr = "{}";
 		        	}
-			        requestNumber = 6;
+			        requestNumber = 7;
 			        printResponce(requestNumber, result, resp, responseStr, path, requestType);
 		        }
 	        }
@@ -253,12 +255,75 @@ public class MyJsonClient {
 	        	System.out.println("Request 7 is ERROR!");
 	        }
 	        
-	        // Request #7
+	        // Request #8
+	        // Step 3.8
+	        path ="person/"+Integer.toString(idP) + '/' + activity_type 
+	        						+ '/' + Integer.toString(activity_id);
+	        requestType = "GET";
+	        resp = service.path(path).request()
+					.accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json")
+					.get();
+	        if (resp.getStatus() == 200){
+	        	result = "OK";
+	        	responseStr = resp.readEntity(String.class);
+	        } else {
+	        	result = "ERROR";
+	        }
+	        requestNumber = 8;
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
+	        
+	        // Request #9
+	        // Step 3.9
+	        // get idFirstPerson activities current count 
+	        int currCountActivities = getActivitiesCount(service, idFirstPerson, activity_type);
+	        
+	        // create new activity
+	        Object newActivity = "{\"name\":\"Swimming\",\"description\":\"Swimming in the river\",\"place\":\"Adige river\",\"type\":\"Sport\",\"startdate\":\"2017-12-28\"}";
+	        
+	        path = "person/" + Integer.toString(idFirstPerson) + '/' + activity_type;
+	        requestType = "POST";
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+	        		.header("Content-type","application/json").post(Entity.json(newActivity));
+	        responseStr = resp.readEntity(String.class);
+	        
+	        requestNumber = 9;
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
+	        
+	        // validate we have added a new activity
+	        int newCountActivities = getActivitiesCount(service, idFirstPerson, activity_type);
+	        if (newCountActivities == currCountActivities + 1) {
+	        	result = "OK";
+	        } else {
+	        	result = "ERROR";
+	        }
+	        System.out.println("Request #9: "+ result);
+	        
+	        
+	        // Request #10
+	        
+	        // Request #11
+	        
     	}
     	catch(Exception e) {
     		e.printStackTrace();
     		System.out.print(e.getMessage());
     	}
+    }
+    
+    private static int getActivitiesCount(WebTarget service, int personId, String activity_type)
+    		throws IOException {
+    	String path = "person/" + Integer.toString(personId) + '/' + activity_type;
+        String requestType = "GET";
+        Response resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+        		.header("Content-type","application/json").get();
+        String responseStr = resp.readEntity(String.class);
+
+        JSONArray personActivitiesArray = new JSONArray(responseStr);
+        int requestNumber = 7;
+        String result = "OK";
+        printResponce(requestNumber, result, resp, responseStr, path, requestType);
+        return personActivitiesArray.length();
     }
     
 }
