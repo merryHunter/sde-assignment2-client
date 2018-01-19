@@ -92,7 +92,6 @@ public class MyJsonClient {
 	        requestNumber = 1;
 	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
 	         		
-	        
 	        int idFirstPerson = (Integer) peopleArray.getJSONObject(0).get("idPerson");
 	        int idLastPerson = (Integer) peopleArray.getJSONObject(peopleCount - 1)
         															.get("idPerson");
@@ -114,10 +113,8 @@ public class MyJsonClient {
 	        requestNumber = 2;
 	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
 	        
-	        
 	        // Request #3 
 	        // Step 3.3
-	        
 	        Object newIvan = "{\"idPerson\":"+ idFirstPerson +
         		",\"firstname\":\"Yaroslav\",\"lastname\":\"Chernukha\",\"birthdate\":\"1995-07-03\"}";
 	        requestType = "PUT";
@@ -131,9 +128,8 @@ public class MyJsonClient {
 	        
 	        personInfo = new JSONObject(responseStr);
 	        String newIvanfirstName = (String) personInfo.get("firstname"); // Yaroslav
-	        
-	        if (!newIvanfirstName.equals(currentIvanName) &&
-	        		newIvanfirstName == "Yaroslav") {
+	        if (!newIvanfirstName.equals(currentIvanName)
+	        		 && newIvanfirstName.equals("Yaroslav")) {
 	        	result = "OK";
 	        }else {
 	        	result = "ERROR";
@@ -141,7 +137,56 @@ public class MyJsonClient {
 	        requestNumber = 3;
 	        printResponce(requestNumber, result, responsePut, responseStr, path, requestType);
             
+	        // Request #4 
+	        // Step 3.4
+	        path ="person";
+	        requestType = "POST";
+	        Object newPerson = "{\"firstname\":\"Leo\",\"lastname\":\"Da Vinci\",\"birthdate\":\"1994-04-14\","
+	        		+ "\"activitypreference\":"
+	        		+ "[{\"name\":\"Football\",\"description\":\"Playing for footbal club A.S. Roma\",\"place\":\"Rome\",\"type\":\"Sport\",\"startdate\":\"2010-10-10\"}]}";
 	        
+	        Response responsePost = service.path(path).request()
+					.accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json")
+					.post(Entity.json(newPerson));
+	        
+	        int idNewPerson = -1;
+	        if (resp.getStatus() == 200 || resp.getStatus() == 201 || resp.getStatus() == 202) {
+	        	result = "OK";
+	        	responseStr = responsePost.readEntity(String.class);
+	        	personInfo = new JSONObject(responseStr);	  
+	        	idNewPerson = (int) personInfo.get("idPerson"); 
+	        }else {
+	        	result = "ERROR";
+	        	responseStr = "";
+	        }
+	        requestNumber = 4;
+	        printResponce(requestNumber, result, responsePost, responseStr, path, requestType);
+	        System.out.println("New person id: " + Integer.toString(idNewPerson));
+	        
+	        // Request #5 
+	        // Step 3.5
+	        path ="person/" + Integer.toString(idNewPerson);
+	        requestType = "DELETE";
+	        Response responseDelete = service.path(path).request()
+					.accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json")
+					.delete();
+	        responseDelete = service.path(path).request()
+					.accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json")
+					.get();
+	        responseStr = responseDelete.readEntity(String.class);
+	        if (responseDelete.getStatus() == 404) {
+	        	result = "OK";
+	        	responseStr ="{}";
+	        } else {
+	        	result ="ERROR";
+	        }
+	        requestNumber = 5;
+	        
+	        printResponce(requestNumber, result, responseDelete, responseStr, path, requestType);
+	        	        
 	        
     		// # 3.6. Request #6
 	        path = "activity_types";
