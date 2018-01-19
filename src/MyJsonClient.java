@@ -276,6 +276,7 @@ public class MyJsonClient {
 	        // Request #9
 	        // Step 3.9
 	        // get idFirstPerson activities current count 
+	        activity_type = "Sport";
 	        int currCountActivities = getActivitiesCount(service, idFirstPerson, activity_type);
 	        
 	        // create new activity
@@ -301,9 +302,62 @@ public class MyJsonClient {
 	        
 	        
 	        // Request #10
-	        
+	        // Step 3.10
+	        // basically we take the last person in our list and update his activity
+	        // Dmytro had Snowboarding and Skiing activities, it should becoma Swimming and Skiing 
+	        newActivity = "{\"name\":\"Swimming\",\"description\":\"Swimming in the river\",\"place\":\"Adige river\",\"type\":\"Extreme\",\"startdate\":\"2017-12-28\"}";
+	        path = "person/" + Integer.toString(idP) + "/"
+	        				+ activity_type +"/" + Integer.toString(activity_id);
+	        requestType = "PUT";
+	        responsePut = service.path(path).request()
+					.accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json")
+					.put(Entity.json(newActivity));
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json").get();
+	        responseStr = resp.readEntity(String.class);
+	        if (resp.getStatus() == 200) {
+	        	result = "OK";
+	        }else {
+	        	result = "ERROR";
+	        }
+	        requestNumber = 10;
+	        printResponce(requestNumber, result, responsePut, responseStr, path, requestType);
+	        // confirm we updated activity
+	        path = "person/" + Integer.toString(idP);
+	        requestType = "GET";
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+	        		.header("Content-type","application/json").get();
+	        responseStr = resp.readEntity(String.class);
+
+	        personInfo = new JSONObject(responseStr);
+	        String mustbeActivityName = "Swimming"; 
+	        String newActivityName = (String) personInfo.getJSONArray("activitypreference")
+	        													.getJSONObject(0).get("name");
+	        int newActivityId = (int) personInfo.getJSONArray("activitypreference")
+					.getJSONObject(0).get("idActivity");
+	        if (newActivityId == activity_id && mustbeActivityName.equals(newActivityName)) {
+	        	result = "OK";
+	        	
+	        } else {
+	        	result = "ERROR";
+	        }
+	        requestNumber = 10;
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
 	        // Request #11
-	        
+	        path = "person/" + Integer.toString(idP) +"/" + activity_type + "/"
+	        			+ "?before=2015-01-01&after=2018-01-01";
+	        requestType = "GET";
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+	        		.header("Content-type","application/json").get();
+	        if (resp.getStatus() == 200) {
+	        	result = "OK";
+	        	responseStr = resp.readEntity(String.class);
+	        } else {
+	        	result = "ERROR";
+	        }
+	        requestNumber = 11;
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
     	}
     	catch(Exception e) {
     		e.printStackTrace();
@@ -311,7 +365,8 @@ public class MyJsonClient {
     	}
     }
     
-    private static int getActivitiesCount(WebTarget service, int personId, String activity_type)
+    private static int getActivitiesCount(WebTarget service, int personId,
+    							String activity_type)
     		throws IOException {
     	String path = "person/" + Integer.toString(personId) + '/' + activity_type;
         String requestType = "GET";
@@ -320,6 +375,7 @@ public class MyJsonClient {
         String responseStr = resp.readEntity(String.class);
 
         JSONArray personActivitiesArray = new JSONArray(responseStr);
+
         int requestNumber = 7;
         String result = "OK";
         printResponce(requestNumber, result, resp, responseStr, path, requestType);
