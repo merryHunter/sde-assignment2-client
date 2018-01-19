@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -35,24 +36,29 @@ public class MyJsonClient {
 									String result,
 									Response responce, 
 									String entity,
-									String path) throws IOException {
+									String path,
+									String requestType) throws IOException {
 		MessageFormat form = new MessageFormat(
    		     "\nRequest #{0}:\nHeader:\n"
-        		+ "GET {5}" + " Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON\n"
+        		+ "{6} {5}" + " Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON\n"
         		+ "=> Result: {1}\n" 
         		+ "=> HTTP Status: {2} {3}\n"
         		+ "Body:\n{4}\n");
-			 ObjectMapper objMapper = new ObjectMapper();
-			 Object json = objMapper.readValue(entity, Object.class);
-			 String entityJson = objMapper.writerWithDefaultPrettyPrinter()
-					 							.writeValueAsString(json);
+		
+		if (result == "ERROR"){
+			entity = "[\"Not found!\"]";
+		}
+		ObjectMapper objMapper = new ObjectMapper();
+		Object json = objMapper.readValue(entity, Object.class);
+		String entityJson = objMapper.writerWithDefaultPrettyPrinter()
+				 							.writeValueAsString(json);
+		
+		Object[] myargs = {requestNumber, result,
+					responce.getStatus(),
+					responce.getStatusInfo(),
+					entityJson, path, requestType};
 
-			Object[] myargs = {requestNumber, result,
-						responce.getStatus(),
-						responce.getStatusInfo(),
-						entityJson, path};
-
-			System.out.println(form.format(myargs));
+		System.out.println(form.format(myargs));
 	}
 	
     public static void main(String[] args)  {
@@ -63,11 +69,13 @@ public class MyJsonClient {
         System.out.println("Server adress: " + getBaseURI() ); 
         
         String result;
+        String requestType;
         int requestNumber;
     	try {
     		// Request #1 
 	        // Step 3.1
     		String path = "person";
+    		requestType = "GET";
 	        Response resp = service.path(path)
 	        		.request()
 	        		.accept(MediaType.APPLICATION_JSON)
@@ -81,43 +89,63 @@ public class MyJsonClient {
 	        }else {
 	        	result = "ERROR";
         	}
-//	        System.out.println(responseStr);
 	        requestNumber = 1;
-	        printResponce(requestNumber, result, resp, responseStr, path);
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
 	         		
 	        
 	        int idFirstPerson = (Integer) peopleArray.getJSONObject(0).get("idPerson");
 	        int idLastPerson = (Integer) peopleArray.getJSONObject(peopleCount - 1)
         															.get("idPerson");
-	        // Request 2 
+	        // Request #2 
 	        // Step 3.2
 	        path = "person/" + Integer.toString(idFirstPerson);
 	        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
 	        						.header("Content-type","application/json").get();
 	        responseStr = resp.readEntity(String.class);
-	        JSONObject personInfo = new JSONObject(responseStr);
+	        JSONObject personInfo;
+	        String currentIvanName = "";
 	        if (resp.getStatus() == 202 || resp.getStatus() == 200) {
 	        	result = "OK";
+	        	personInfo = new JSONObject(responseStr);
+	        	currentIvanName = (String) personInfo.get("firstname"); // Ivan
 	        } else {
 	        	result ="ERROR";
 	        }
-//	        System.out.println(responseStr);
 	        requestNumber = 2;
-	        printResponce(requestNumber, result, resp, responseStr, path);
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
 	        
 	        
+	        // Request #3 
+	        // Step 3.3
 	        
-//    		Object entity4 = "{\"lastname\":\"Holmes\",\"birthdate\":1510780525483}";
-    
-//            Response responsePost = service.path("person").request()
-//            					.accept(MediaType.APPLICATION_JSON)
-//            					.header("Content-type","application/json")
-//            					.post(Entity.json(entity4));
-//
-//	        System.out.println(responsePost);
-    		
+	        Object newIvan = "{\"idPerson\":"+ idFirstPerson +
+        		",\"firstname\":\"Yaroslav\",\"lastname\":\"Chernukha\",\"birthdate\":\"1995-07-03\"}";
+	        requestType = "PUT";
+	        Response responsePut = service.path(path).request()
+					.accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json")
+					.put(Entity.json(newIvan));
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json").get();
+	        responseStr = resp.readEntity(String.class);
+	        
+	        personInfo = new JSONObject(responseStr);
+	        String newIvanfirstName = (String) personInfo.get("firstname"); // Yaroslav
+	        
+	        if (!newIvanfirstName.equals(currentIvanName) &&
+	        		newIvanfirstName == "Yaroslav") {
+	        	result = "OK";
+	        }else {
+	        	result = "ERROR";
+	        }
+	        requestNumber = 3;
+	        printResponce(requestNumber, result, responsePut, responseStr, path, requestType);
+            
+	        
+	        
     		// # 3.6. Request #6
 	        path = "activity_types";
+	        requestType = "GET";
 	        Response resp6 = service.path(path)
 	        		.request()
 	        		.accept(MediaType.APPLICATION_JSON)
@@ -131,13 +159,13 @@ public class MyJsonClient {
 	        for (int i=0;i<activityTypeCount;i++) {
 	        	activityTypesList.add(array6.get(i).toString());
 	        }
-	        if(activityTypeCount>2) {
+	        if(activityTypeCount > 2) {
 	        	result = "OK";
 	        }else {
 	        	result = "ERROR";
 	        }
 	        requestNumber = 6;
-	        printResponce(requestNumber, result, resp6, response6, path);
+	        printResponce(requestNumber, result, resp6, response6, path, requestType);
 	        System.out.println("List of activity types in the system:" + activityTypesList);
 	        
 	        
