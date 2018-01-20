@@ -70,7 +70,8 @@ public class MyXMLClient {
 	
 	public static String format(String unformattedXml) throws Exception {
 		System.out.println(unformattedXml);
-		if (!unformattedXml.equals("") || !unformattedXml.isEmpty()){
+		if (!unformattedXml.equals("") && !unformattedXml.isEmpty()
+				&& unformattedXml.length() > 10){
 	        final Document document = getXml(unformattedXml);
 	        OutputFormat outputFormat = new OutputFormat(document);
 	        outputFormat.setIndenting(true);
@@ -254,7 +255,12 @@ public class MyXMLClient {
 	        document = getXml(responseStr);
 	        
 	        int activityTypeCount = document.getElementsByTagName("activityTypes").getLength();
-	      
+	        NodeList activity_types_nodes = document.getElementsByTagName("activityTypes");
+	        List<String> activity_types = new ArrayList<String>();
+	        for (int i = 0;i < activityTypeCount; i++) {
+	        	activity_types.add(activity_types_nodes.item(i).getTextContent());
+	        }
+	        
 	        if(activityTypeCount > 2) {
 	        	result = "OK";
 	        }else {
@@ -264,6 +270,50 @@ public class MyXMLClient {
 	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
 	        
 	        
+	        // Request #7
+	        // Step 3.7
+	        int allActivitiesCount = 0;
+	        int[] peopleIds = {idFirstPerson, idLastPerson};
+	        int activity_id = -1;
+	        int idP = -1;
+	        String activity_type = "";
+	        for (int id: peopleIds) {
+		        for (String activity: activity_types) {
+			        path = "person/" + Integer.toString(id) + '/' + activity;
+			        requestType = "GET";
+			        resp = service.path(path).request().accept(MediaType.APPLICATION_XML)
+			        		.header("Content-type","application/xml").get();
+			        responseStr = resp.readEntity(String.class);
+			        document = getXml(responseStr);
+			        NodeList personActivitiesArray = document.getElementsByTagName("activity");
+			        int activitiesCount = personActivitiesArray.getLength();
+			        if(activitiesCount > 0) {
+			        	allActivitiesCount += activitiesCount;
+			        	result = "OK";
+			        	activity_id = Integer.parseInt(personActivitiesArray.item(0)
+			        					.getFirstChild().getNextSibling().getTextContent());
+			        	System.out.println(activity_id);
+			        	activity_type = personActivitiesArray.item(0)
+	        						.getLastChild().getTextContent();
+			        	idP = id;
+			        }else {
+			        	result = "ERROR";
+			        	responseStr = "{}";
+		        	}
+			        requestNumber = 7;
+			        System.out.println(responseStr);
+			        
+			        printResponce(requestNumber, result, resp, responseStr, path, requestType);
+		        }
+	        }
+	        if (allActivitiesCount > 0) {
+	        	System.out.println("Request 7 is OK, there were "
+	        				+ Integer.toString(allActivitiesCount) + " activities.");
+	        	System.out.println("Selected activities: id: " + Integer.toString(activity_id)
+	        							+ " type: " + activity_type);
+	        } else {
+	        	System.out.println("Request 7 is ERROR!");
+	        }
 	        
 	        
 	        
