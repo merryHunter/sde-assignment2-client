@@ -76,11 +76,8 @@ public class MyJsonClient {
 	        // Step 3.1
     		String path = "person";
     		requestType = "GET";
-	        Response resp = service.path(path)
-	        		.request()
-	        		.accept(MediaType.APPLICATION_JSON)
-	        		.header("Content-type","application/json")
-	        		.get();
+	        Response resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+	        		.header("Content-type","application/json").get();
 	        String responseStr = resp.readEntity(String.class);
 	        JSONArray peopleArray = new JSONArray(responseStr);
 	        int peopleCount = peopleArray.length();
@@ -145,10 +142,8 @@ public class MyJsonClient {
 	        		+ "\"activitypreference\":"
 	        		+ "[{\"name\":\"Football\",\"description\":\"Playing for footbal club A.S. Roma\",\"place\":\"Rome\",\"type\":\"Sport\",\"startdate\":\"2010-10-10\"}]}";
 	        
-	        Response responsePost = service.path(path).request()
-					.accept(MediaType.APPLICATION_JSON)
-					.header("Content-type","application/json")
-					.post(Entity.json(newPerson));
+	        Response responsePost = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json").post(Entity.json(newPerson));
 	        
 	        int idNewPerson = -1;
 	        if (resp.getStatus() == 200 || resp.getStatus() == 201 || resp.getStatus() == 202) {
@@ -168,14 +163,10 @@ public class MyJsonClient {
 	        // Step 3.5
 	        path ="person/" + Integer.toString(idNewPerson);
 	        requestType = "DELETE";
-	        Response responseDelete = service.path(path).request()
-					.accept(MediaType.APPLICATION_JSON)
-					.header("Content-type","application/json")
-					.delete();
-	        responseDelete = service.path(path).request()
-					.accept(MediaType.APPLICATION_JSON)
-					.header("Content-type","application/json")
-					.get();
+	        Response responseDelete = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json").delete();
+	        responseDelete = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json").get();
 	        responseStr = responseDelete.readEntity(String.class);
 	        if (responseDelete.getStatus() == 404) {
 	        	result = "OK";
@@ -190,13 +181,11 @@ public class MyJsonClient {
 	        // Step 3.6
 	        path = "activity_types";
 	        requestType = "GET";
-	        resp = service.path(path)
-	        		.request()
-	        		.accept(MediaType.APPLICATION_JSON)
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
 	        		.header("Content-type","application/json").get();
 	        responseStr = resp.readEntity(String.class);
-
-	        JSONArray activitiesArray = new JSONArray(responseStr);
+	        System.out.println(responseStr);
+	        JSONArray activitiesArray = new JSONObject(responseStr).getJSONArray("activityTypes");
 	        int activityTypeCount = activitiesArray.length();
 	      
 	        List<String> activity_types = new ArrayList<String>();
@@ -210,7 +199,6 @@ public class MyJsonClient {
 	        }
 	        requestNumber = 6;
 	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
-	        System.out.println("List of activity types in the system:" + activity_types);
 	        
 	        
 	        // Request #7
@@ -260,10 +248,8 @@ public class MyJsonClient {
 	        path ="person/"+Integer.toString(idP) + '/' + activity_type 
 	        						+ '/' + Integer.toString(activity_id);
 	        requestType = "GET";
-	        resp = service.path(path).request()
-					.accept(MediaType.APPLICATION_JSON)
-					.header("Content-type","application/json")
-					.get();
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json").get();
 	        if (resp.getStatus() == 200){
 	        	result = "OK";
 	        	responseStr = resp.readEntity(String.class);
@@ -309,10 +295,8 @@ public class MyJsonClient {
 	        path = "person/" + Integer.toString(idP) + "/"
 	        				+ activity_type +"/" + Integer.toString(activity_id);
 	        requestType = "PUT";
-	        responsePut = service.path(path).request()
-					.accept(MediaType.APPLICATION_JSON)
-					.header("Content-type","application/json")
-					.put(Entity.json(newActivity));
+	        responsePut = service.path(path).request().accept(MediaType.APPLICATION_JSON)
+					.header("Content-type","application/json").put(Entity.json(newActivity));
 	        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
 					.header("Content-type","application/json").get();
 	        responseStr = resp.readEntity(String.class);
