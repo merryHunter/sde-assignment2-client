@@ -121,6 +121,26 @@ public class MyXMLClient {
 						" 	 </activitypreference>\n" +
 					"	 </preferences>\n" + 
 					"</person>\n";    
+		} else if (key == 3){
+			return 
+					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" + 
+					" <activity>\n" + 
+					"	<name>Swimming</name>\n" 	+
+					"   <description>Swimming in the river</description>\n" +
+					"   <place>Adige river</place>\n" +
+					"   <type>Sport</type>\n" + 
+					"   <startdate>2017-12-28</startdate>\n" +
+				" 	 </activity>\n";
+		}else if (key == 4){
+			return 
+					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" + 
+					" <activity>\n" + 
+					"	<name>Swimming</name>\n" 	+
+					"   <description>Swimming in the river</description>\n" +
+					"   <place>Adige river</place>\n" +
+					"   <type>Extreme</type>\n" + 
+					"   <startdate>2017-12-28</startdate>\n" +
+				" 	 </activity>\n";
 		}
 		return null;
 	}
@@ -315,10 +335,126 @@ public class MyXMLClient {
 	        	System.out.println("Request 7 is ERROR!");
 	        }
 	        
+	        // Request #8
+	        // Step 3.8
+	        path ="person/"+Integer.toString(idP) + '/' + activity_type 
+	        						+ '/' + Integer.toString(activity_id);
+	        requestType = "GET";
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_XML)
+					.header("Content-type","application/xml").get();
+	        if (resp.getStatus() == 200){
+	        	result = "OK";
+	        	responseStr = resp.readEntity(String.class);
+	        } else {
+	        	result = "ERROR";
+	        }
+	        requestNumber = 8;
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
+	        
+	        // Request #9
+	        // Step 3.9
+	        // get idFirstPerson activities current count 
+	        activity_type = "Sport";
+	        int currCountActivities = getActivitiesCount(service, idFirstPerson, activity_type);
+	        
+	        // create new activity
+	        Object newActivity = createXMLObjectAsString(-1, 3);
+	        path = "person/" + Integer.toString(idFirstPerson) + '/' + activity_type;
+	        requestType = "POST";
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_XML)
+	        		.header("Content-type","application/xml").post(Entity.xml(newActivity));
+	        responseStr = resp.readEntity(String.class);
+	        
+	        requestNumber = 9;
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
+	        
+	        // validate we have added a new activity
+	        int newCountActivities = getActivitiesCount(service, idFirstPerson, activity_type);
+	        if (newCountActivities == currCountActivities + 1) {
+	        	result = "OK";
+	        } else {
+	        	result = "ERROR";
+	        }
+	        System.out.println("Request #9: "+ result);
+	        
+	        // Request #10
+	        // Step 3.10
+	        // basically we take the last person in our list and update his activity
+	        // Dmytro had Snowboarding and Skiing activities, it should become Swimming and Skiing 
+	        path = "person/" + Integer.toString(idP) + "/"
+	        				+ activity_type +"/" + Integer.toString(activity_id);
+	        requestType = "PUT";
+	        Response responsePut = service.path(path).request().accept(MediaType.APPLICATION_XML)
+					.header("Content-type","application/xml")
+					.put(Entity.xml(createXMLObjectAsString(-1, 4)));
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_XML)
+					.header("Content-type","application/xml").get();
+	        responseStr = resp.readEntity(String.class);
+	        if (resp.getStatus() == 200) {
+	        	result = "OK";
+	        }else {
+	        	result = "ERROR";
+	        }
+	        requestNumber = 10;
+	        printResponce(requestNumber, result, responsePut, responseStr, path, requestType);
+	        // confirm we updated activity
+	        path = "person/" + Integer.toString(idP);
+	        requestType = "GET";
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_XML)
+	        		.header("Content-type","application/xml").get();
+	        responseStr = resp.readEntity(String.class);
+	        
+	        document = getXml(responseStr);
+	        NodeList personActivitiesArray = document.getElementsByTagName("activitypreference");
+	        String mustbeActivityName = "Swimming"; 
+	        String newActivityName = (String) personActivitiesArray.item(0).getChildNodes()
+	        														.item(2).getTextContent();
+	        int newActivityId = Integer.parseInt(personActivitiesArray.item(0)
+										.getFirstChild().getNextSibling().getTextContent());
+					
+	        if (newActivityId == activity_id && mustbeActivityName.equals(newActivityName)) {
+	        	result = "OK";
+	        	
+	        } else {
+	        	result = "ERROR";
+	        }
+	        requestNumber = 10;
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
 	        
 	        
+	        // Request #11
+	        path = "person/" + Integer.toString(idP) +"/" + activity_type + "/"
+	        			+ "?before=2015-01-01&after=2018-01-01";
+	        requestType = "GET";
+	        resp = service.path(path).request().accept(MediaType.APPLICATION_XML)
+	        		.header("Content-type","application/xml").get();
+	        if (resp.getStatus() == 200) {
+	        	result = "OK";
+	        	responseStr = resp.readEntity(String.class);
+	        } else {
+	        	result = "ERROR";
+	        }
+	        requestNumber = 11;
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static int getActivitiesCount(WebTarget service, int personId,
+			String activity_type) throws Exception {
+		String path = "person/" + Integer.toString(personId) + '/' + activity_type;
+		String requestType = "GET";
+		Response resp = service.path(path).request().accept(MediaType.APPLICATION_XML)
+									.header("Content-type","application/xml").get();
+		String responseStr = resp.readEntity(String.class);
+		Document document = getXml(responseStr);
+		NodeList personActivitiesArray = document.getElementsByTagName("activity");
+        int activitiesCount = personActivitiesArray.getLength();
+
+		int requestNumber = 7;
+		String result = "OK";
+		printResponce(requestNumber, result, resp, responseStr, path, requestType);
+		return activitiesCount;
 	}
 }

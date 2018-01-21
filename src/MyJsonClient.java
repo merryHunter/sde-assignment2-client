@@ -290,7 +290,7 @@ public class MyJsonClient {
 	        // Request #10
 	        // Step 3.10
 	        // basically we take the last person in our list and update his activity
-	        // Dmytro had Snowboarding and Skiing activities, it should becoma Swimming and Skiing 
+	        // Dmytro had Snowboarding and Skiing activities, it should become Swimming and Skiing 
 	        newActivity = "{\"name\":\"Swimming\",\"description\":\"Swimming in the river\",\"place\":\"Adige river\",\"type\":\"Extreme\",\"startdate\":\"2017-12-28\"}";
 	        path = "person/" + Integer.toString(idP) + "/"
 	        				+ activity_type +"/" + Integer.toString(activity_id);
@@ -350,8 +350,7 @@ public class MyJsonClient {
     }
     
     private static int getActivitiesCount(WebTarget service, int personId,
-    							String activity_type)
-    		throws IOException {
+    							String activity_type) throws IOException {
     	String path = "person/" + Integer.toString(personId) + '/' + activity_type;
         String requestType = "GET";
         Response resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
