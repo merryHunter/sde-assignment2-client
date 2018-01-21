@@ -33,7 +33,8 @@ public class MyXMLClient {
 	
 	private static URI getBaseURI() {
         return UriBuilder.fromUri(
-                "http://localhost:5901/").build();
+//                "http://localhost:5901/"
+        		"http://assignment2-chernukha.herokuapp.com/").build();
     }
 	
 	private static void printResponce(int requestNumber, 
@@ -69,7 +70,6 @@ public class MyXMLClient {
 	}
 	
 	public static String format(String unformattedXml) throws Exception {
-		System.out.println(unformattedXml);
 		if (!unformattedXml.equals("") && !unformattedXml.isEmpty()
 				&& unformattedXml.length() > 10){
 	        final Document document = getXml(unformattedXml);
@@ -149,6 +149,9 @@ public class MyXMLClient {
 		ClientConfig clientConfig = new ClientConfig();
         Client client = ClientBuilder.newClient(clientConfig);
         WebTarget service = client.target(getBaseURI());
+        
+        // Step 1
+        System.out.println("Server address: " + getBaseURI() ); 
         String result;
 		try {
 	        // Request #1
@@ -274,8 +277,8 @@ public class MyXMLClient {
 	        System.out.println(responseStr);
 	        document = getXml(responseStr);
 	        
-	        int activityTypeCount = document.getElementsByTagName("activityTypes").getLength();
-	        NodeList activity_types_nodes = document.getElementsByTagName("activityTypes");
+	        int activityTypeCount = document.getElementsByTagName("activity_type").getLength();
+	        NodeList activity_types_nodes = document.getElementsByTagName("activity_type");
 	        List<String> activity_types = new ArrayList<String>();
 	        for (int i = 0;i < activityTypeCount; i++) {
 	        	activity_types.add(activity_types_nodes.item(i).getTextContent());

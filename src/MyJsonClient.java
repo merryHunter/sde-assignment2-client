@@ -21,7 +21,8 @@ public class MyJsonClient {
 	
 	private static URI getBaseURI() {
         return UriBuilder.fromUri(
-                "http://localhost:5901/").build();
+//                "http://localhost:5901/"
+        		"http://assignment2-chernukha.herokuapp.com/").build();
     }
 	
 	/**
@@ -66,7 +67,7 @@ public class MyJsonClient {
         Client client = ClientBuilder.newClient(clientConfig);
         WebTarget service = client.target(getBaseURI());
         // Step 1
-        System.out.println("Server adress: " + getBaseURI() ); 
+        System.out.println("Server address: " + getBaseURI() ); 
         
         String result;
         String requestType;
