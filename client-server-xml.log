@@ -1,0 +1,564 @@
+Server address: http://assignment2-chernukha.herokuapp.com/
+
+Request #1:
+Header:
+GET person Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<people>
+    <person>
+        <preferences>
+            <activitypreference>
+                <description>Studying concurrency for the 2nd apello</description>
+                <idActivity>2</idActivity>
+                <name>Studying</name>
+                <place>UniTrento</place>
+                <startdate>2017-01-22</startdate>
+                <type>University</type>
+            </activitypreference>
+            <activitypreference>
+                <description>Hunting in forest for boars and foxes</description>
+                <idActivity>3</idActivity>
+                <name>Hunting</name>
+                <place>Koriukivka, Ukraine</place>
+                <startdate>2012-11-10</startdate>
+                <type>Extreme</type>
+            </activitypreference>
+        </preferences>
+        <birthdate>1995-07-03</birthdate>
+        <firstname>Ivan</firstname>
+        <idPerson>1</idPerson>
+        <lastname>Chernukha</lastname>
+    </person>
+    <person>
+        <preferences>
+            <activitypreference>
+                <description>Bungee jumping from a high building in New York</description>
+                <idActivity>5</idActivity>
+                <name>Bungee jumping</name>
+                <place>New York</place>
+                <startdate>2018-01-18</startdate>
+                <type>Extreme</type>
+            </activitypreference>
+            <activitypreference>
+                <description>Escape from Palazzo delle Albere</description>
+                <idActivity>6</idActivity>
+                <name>Escape room</name>
+                <place>Palazzo delle Albere, Trento</place>
+                <startdate>2017-01-01</startdate>
+                <type>Social</type>
+            </activitypreference>
+        </preferences>
+        <birthdate>1990-09-30</birthdate>
+        <firstname>Oleg</firstname>
+        <idPerson>4</idPerson>
+        <lastname>Matios</lastname>
+    </person>
+    <person>
+        <preferences>
+            <activitypreference>
+                <description>A new exhibition of a great painter</description>
+                <idActivity>8</idActivity>
+                <name>Exhibition</name>
+                <place>Buonconsiglio Castle, Trento</place>
+                <startdate>2017-01-01</startdate>
+                <type>City</type>
+            </activitypreference>
+        </preferences>
+        <birthdate>1998-04-22</birthdate>
+        <firstname>Nicol</firstname>
+        <idPerson>7</idPerson>
+        <lastname>Vecchia</lastname>
+    </person>
+    <person>
+        <preferences>
+            <activitypreference>
+                <description>Resort on Bali island</description>
+                <idActivity>10</idActivity>
+                <name>Resort</name>
+                <place>Bali, Indonesia</place>
+                <startdate>2015-07-14</startdate>
+                <type>Social</type>
+            </activitypreference>
+            <activitypreference>
+                <description>Quest in the city center</description>
+                <idActivity>11</idActivity>
+                <name>Quest</name>
+                <place>Trento</place>
+                <startdate>2017-02-03</startdate>
+                <type>City</type>
+            </activitypreference>
+        </preferences>
+        <birthdate>1985-05-05</birthdate>
+        <firstname>Sofia</firstname>
+        <idPerson>9</idPerson>
+        <lastname>Alzetta</lastname>
+    </person>
+    <person>
+        <preferences>
+            <activitypreference>
+                <description>Snowboarding in Alpines</description>
+                <idActivity>13</idActivity>
+                <name>Snowboarding</name>
+                <place>Dolimities, Italy</place>
+                <startdate>2017-01-01</startdate>
+                <type>Sport</type>
+            </activitypreference>
+            <activitypreference>
+                <description>Skiing in Carpathian mountains</description>
+                <idActivity>14</idActivity>
+                <name>Skiing</name>
+                <place>Carpathy, Ukraine</place>
+                <startdate>2017-02-01</startdate>
+                <type>Sport</type>
+            </activitypreference>
+        </preferences>
+        <birthdate>1994-12-01</birthdate>
+        <firstname>Dmytro</firstname>
+        <idPerson>12</idPerson>
+        <lastname>Koval</lastname>
+    </person>
+</people>
+
+
+
+Request #2:
+Header:
+GET person/1 Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<person>
+    <preferences>
+        <activitypreference>
+            <description>Studying concurrency for the 2nd apello</description>
+            <idActivity>2</idActivity>
+            <name>Studying</name>
+            <place>UniTrento</place>
+            <startdate>2017-01-22</startdate>
+            <type>University</type>
+        </activitypreference>
+        <activitypreference>
+            <description>Hunting in forest for boars and foxes</description>
+            <idActivity>3</idActivity>
+            <name>Hunting</name>
+            <place>Koriukivka, Ukraine</place>
+            <startdate>2012-11-10</startdate>
+            <type>Extreme</type>
+        </activitypreference>
+    </preferences>
+    <birthdate>1995-07-03</birthdate>
+    <firstname>Ivan</firstname>
+    <idPerson>1</idPerson>
+    <lastname>Chernukha</lastname>
+</person>
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<person>
+    <birthdate>1995-07-03</birthdate>
+    <firstname>Yaroslav</firstname>
+    <idPerson>1</idPerson>
+    <lastname>Chernukha</lastname>
+</person>
+Name has been changed to: Yaroslav
+Request #2:
+Header:
+GET person/1 Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<person>
+    <preferences>
+        <activitypreference>
+            <description>Studying concurrency for the 2nd apello</description>
+            <idActivity>2</idActivity>
+            <name>Studying</name>
+            <place>UniTrento</place>
+            <startdate>2017-01-22</startdate>
+            <type>University</type>
+        </activitypreference>
+        <activitypreference>
+            <description>Hunting in forest for boars and foxes</description>
+            <idActivity>3</idActivity>
+            <name>Hunting</name>
+            <place>Koriukivka, Ukraine</place>
+            <startdate>2012-11-10</startdate>
+            <type>Extreme</type>
+        </activitypreference>
+    </preferences>
+    <birthdate>1995-07-03</birthdate>
+    <firstname>Yaroslav</firstname>
+    <idPerson>1</idPerson>
+    <lastname>Chernukha</lastname>
+</person>
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<person>
+    <birthdate>1994-04-14</birthdate>
+    <firstname>Leo</firstname>
+    <lastname>Da Vinci</lastname>
+	 <preferences>
+ 	 <activitypreference>
+	<name>Football</name>
+   <description>Playing for footbal club A.S. Roma</description>
+   <place>Rome</place>
+   <type>Sport</type>
+   <startdate>2010-10-10</startdate>
+ 	 </activitypreference>
+	 </preferences>
+</person>
+
+
+Request #4:
+Header:
+POST person Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<person>
+    <preferences>
+        <activitypreference>
+            <description>Playing for footbal club A.S. Roma</description>
+            <idActivity>16</idActivity>
+            <name>Football</name>
+            <place>Rome</place>
+            <startdate>2010-10-10</startdate>
+            <type>Sport</type>
+        </activitypreference>
+    </preferences>
+    <birthdate>1994-04-14</birthdate>
+    <firstname>Leo</firstname>
+    <idPerson>15</idPerson>
+    <lastname>Da Vinci</lastname>
+</person>
+
+
+New person id: 15
+
+Request #5:
+Header:
+DELETE person/15 Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 404 Not Found
+Body:
+
+
+response for activity types
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><activityTypes><activity_type>Sport</activity_type><activity_type>Social</activity_type><activity_type>University</activity_type><activity_type>City</activity_type><activity_type>Extreme</activity_type><activityType>Sport</activityType><activityType>Social</activityType><activityType>University</activityType><activityType>City</activityType><activityType>Extreme</activityType></activityTypes>
+
+Request #6:
+Header:
+GET activity_types Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<activityTypes>
+    <activity_type>Sport</activity_type>
+    <activity_type>Social</activity_type>
+    <activity_type>University</activity_type>
+    <activity_type>City</activity_type>
+    <activity_type>Extreme</activity_type>
+    <activityType>Sport</activityType>
+    <activityType>Social</activityType>
+    <activityType>University</activityType>
+    <activityType>City</activityType>
+    <activityType>Extreme</activityType>
+</activityTypes>
+
+
+{}
+
+Request #7:
+Header:
+GET person/1/Sport Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+
+
+{}
+
+Request #7:
+Header:
+GET person/1/Social Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+
+
+2
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><activities><activity><description>Studying concurrency for the 2nd apello</description><idActivity>2</idActivity><name>Studying</name><place>UniTrento</place><startdate>2017-01-22</startdate><type>University</type></activity></activities>
+
+Request #7:
+Header:
+GET person/1/University Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<activities>
+    <activity>
+        <description>Studying concurrency for the 2nd apello</description>
+        <idActivity>2</idActivity>
+        <name>Studying</name>
+        <place>UniTrento</place>
+        <startdate>2017-01-22</startdate>
+        <type>University</type>
+    </activity>
+</activities>
+
+
+{}
+
+Request #7:
+Header:
+GET person/1/City Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+
+
+3
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><activities><activity><description>Hunting in forest for boars and foxes</description><idActivity>3</idActivity><name>Hunting</name><place>Koriukivka, Ukraine</place><startdate>2012-11-10</startdate><type>Extreme</type></activity></activities>
+
+Request #7:
+Header:
+GET person/1/Extreme Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<activities>
+    <activity>
+        <description>Hunting in forest for boars and foxes</description>
+        <idActivity>3</idActivity>
+        <name>Hunting</name>
+        <place>Koriukivka, Ukraine</place>
+        <startdate>2012-11-10</startdate>
+        <type>Extreme</type>
+    </activity>
+</activities>
+
+
+13
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><activities><activity><description>Snowboarding in Alpines</description><idActivity>13</idActivity><name>Snowboarding</name><place>Dolimities, Italy</place><startdate>2017-01-01</startdate><type>Sport</type></activity><activity><description>Skiing in Carpathian mountains</description><idActivity>14</idActivity><name>Skiing</name><place>Carpathy, Ukraine</place><startdate>2017-02-01</startdate><type>Sport</type></activity></activities>
+
+Request #7:
+Header:
+GET person/12/Sport Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<activities>
+    <activity>
+        <description>Snowboarding in Alpines</description>
+        <idActivity>13</idActivity>
+        <name>Snowboarding</name>
+        <place>Dolimities, Italy</place>
+        <startdate>2017-01-01</startdate>
+        <type>Sport</type>
+    </activity>
+    <activity>
+        <description>Skiing in Carpathian mountains</description>
+        <idActivity>14</idActivity>
+        <name>Skiing</name>
+        <place>Carpathy, Ukraine</place>
+        <startdate>2017-02-01</startdate>
+        <type>Sport</type>
+    </activity>
+</activities>
+
+
+{}
+
+Request #7:
+Header:
+GET person/12/Social Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+
+
+{}
+
+Request #7:
+Header:
+GET person/12/University Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+
+
+{}
+
+Request #7:
+Header:
+GET person/12/City Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+
+
+{}
+
+Request #7:
+Header:
+GET person/12/Extreme Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+
+
+Request 7 is OK, there were 4 activities.
+Selected activities: id: 13 type: Sport
+
+Request #8:
+Header:
+GET person/12/Sport/13 Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<activities>
+    <activity>
+        <description>Snowboarding in Alpines</description>
+        <idActivity>13</idActivity>
+        <name>Snowboarding</name>
+        <place>Dolimities, Italy</place>
+        <startdate>2017-01-01</startdate>
+        <type>Sport</type>
+    </activity>
+</activities>
+
+
+
+Request #7:
+Header:
+GET person/1/Sport Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<activities/>
+
+
+
+Request #9:
+Header:
+POST person/1/Sport Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<activities>
+    <activity>
+        <description>Studying concurrency for the 2nd apello</description>
+        <idActivity>2</idActivity>
+        <name>Studying</name>
+        <place>UniTrento</place>
+        <startdate>2017-01-22</startdate>
+        <type>University</type>
+    </activity>
+    <activity>
+        <description>Hunting in forest for boars and foxes</description>
+        <idActivity>3</idActivity>
+        <name>Hunting</name>
+        <place>Koriukivka, Ukraine</place>
+        <startdate>2012-11-10</startdate>
+        <type>Extreme</type>
+    </activity>
+    <activity>
+        <description>Swimming in the river</description>
+        <idActivity>17</idActivity>
+        <name>Swimming</name>
+        <place>Adige river</place>
+        <startdate>2017-12-28</startdate>
+        <type>Sport</type>
+    </activity>
+</activities>
+
+
+
+Request #7:
+Header:
+GET person/1/Sport Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<activities>
+    <activity>
+        <description>Swimming in the river</description>
+        <idActivity>17</idActivity>
+        <name>Swimming</name>
+        <place>Adige river</place>
+        <startdate>2017-12-28</startdate>
+        <type>Sport</type>
+    </activity>
+</activities>
+
+
+Request #9: OK
+
+Request #10:
+Header:
+PUT person/12/Sport/13 Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 500 Internal Server Error
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<activities/>
+
+
+
+Request #10:
+Header:
+GET person/12 Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+<?xml version="1.0" encoding="UTF-8"?>
+<person>
+    <preferences>
+        <activitypreference>
+            <description>Swimming in the river</description>
+            <idActivity>13</idActivity>
+            <name>Swimming</name>
+            <place>Adige river</place>
+            <startdate>2017-12-28</startdate>
+            <type>Extreme</type>
+        </activitypreference>
+        <activitypreference>
+            <description>Skiing in Carpathian mountains</description>
+            <idActivity>14</idActivity>
+            <name>Skiing</name>
+            <place>Carpathy, Ukraine</place>
+            <startdate>2017-02-01</startdate>
+            <type>Sport</type>
+        </activitypreference>
+    </preferences>
+    <birthdate>1994-12-01</birthdate>
+    <firstname>Dmytro</firstname>
+    <idPerson>12</idPerson>
+    <lastname>Koval</lastname>
+</person>
+
+
+
+Request #11:
+Header:
+GET person/12/Sport/?before=2015-01-01&after=2018-01-01 Accept: APPLICATION/XML Content-Type: APPLICATION/XML
+=> Result: ERROR
+=> HTTP Status: 404 Not Found
+Body:
+
+

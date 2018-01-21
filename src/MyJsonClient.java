@@ -21,8 +21,9 @@ public class MyJsonClient {
 	
 	private static URI getBaseURI() {
         return UriBuilder.fromUri(
-//                "http://localhost:5901/"
-        		"http://assignment2-chernukha.herokuapp.com/").build();
+                "http://localhost:5901/"
+//        		"http://assignment2-chernukha.herokuapp.com/"
+        		).build();
     }
 	
 	/**
@@ -185,8 +186,7 @@ public class MyJsonClient {
 	        resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
 	        		.header("Content-type","application/json").get();
 	        responseStr = resp.readEntity(String.class);
-	        System.out.println(responseStr);
-	        JSONArray activitiesArray = new JSONObject(responseStr).getJSONArray("activityTypes");
+	        JSONArray activitiesArray = new JSONObject(responseStr).getJSONArray("activityType");
 	        int activityTypeCount = activitiesArray.length();
 	      
 	        List<String> activity_types = new ArrayList<String>();
