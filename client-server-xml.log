@@ -165,7 +165,7 @@ Body:
     <lastname>Chernukha</lastname>
 </person>
 Name has been changed to: Yaroslav
-Request #2:
+Request #3:
 Header:
 GET person/1 Accept: APPLICATION/XML Content-Type: APPLICATION/XML
 => Result: OK

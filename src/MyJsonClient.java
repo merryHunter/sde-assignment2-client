@@ -21,8 +21,8 @@ public class MyJsonClient {
 	
 	private static URI getBaseURI() {
         return UriBuilder.fromUri(
-                "http://localhost:5901/"
-//        		"http://assignment2-chernukha.herokuapp.com/"
+//                "http://localhost:8081/ass2/"
+        		"http://assignment2-chernukha.herokuapp.com/"
         		).build();
     }
 	
@@ -81,6 +81,8 @@ public class MyJsonClient {
 	        Response resp = service.path(path).request().accept(MediaType.APPLICATION_JSON)
 	        		.header("Content-type","application/json").get();
 	        String responseStr = resp.readEntity(String.class);
+	        System.out.println(responseStr);
+	        
 	        JSONArray peopleArray = new JSONArray(responseStr);
 	        int peopleCount = peopleArray.length();
 	        if(peopleCount > 4) {
@@ -130,11 +132,12 @@ public class MyJsonClient {
 	        if (!newIvanfirstName.equals(currentIvanName)
 	        		 && newIvanfirstName.equals("Yaroslav")) {
 	        	result = "OK";
+	        	System.out.print("Name has been changed to: " + newIvanfirstName);
 	        }else {
 	        	result = "ERROR";
 	        }
 	        requestNumber = 3;
-	        printResponce(requestNumber, result, responsePut, responseStr, path, requestType);
+	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
             
 	        // Request #4 
 	        // Step 3.4

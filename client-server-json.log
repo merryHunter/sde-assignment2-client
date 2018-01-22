@@ -1,0 +1,445 @@
+Server address: http://assignment2-chernukha.herokuapp.com/
+[{"idPerson":1,"firstname":"Ivan","lastname":"Chernukha","birthdate":"1995-07-03","activitypreference":[{"idActivity":2,"name":"Studying","description":"Studying concurrency for the 2nd apello","place":"UniTrento","type":"University","startdate":"2017-01-22"},{"idActivity":3,"name":"Hunting","description":"Hunting in forest for boars and foxes","place":"Koriukivka, Ukraine","type":"Extreme","startdate":"2012-11-10"}]},{"idPerson":4,"firstname":"Oleg","lastname":"Matios","birthdate":"1990-09-30","activitypreference":[{"idActivity":5,"name":"Bungee jumping","description":"Bungee jumping from a high building in New York","place":"New York","type":"Extreme","startdate":"2018-01-18"},{"idActivity":6,"name":"Escape room","description":"Escape from Palazzo delle Albere","place":"Palazzo delle Albere, Trento","type":"Social","startdate":"2017-01-01"}]},{"idPerson":7,"firstname":"Nicol","lastname":"Vecchia","birthdate":"1998-04-22","activitypreference":[{"idActivity":8,"name":"Exhibition","description":"A new exhibition of a great painter","place":"Buonconsiglio Castle, Trento","type":"City","startdate":"2017-01-01"}]},{"idPerson":9,"firstname":"Sofia","lastname":"Alzetta","birthdate":"1985-05-05","activitypreference":[{"idActivity":10,"name":"Resort","description":"Resort on Bali island","place":"Bali, Indonesia","type":"Social","startdate":"2015-07-14"},{"idActivity":11,"name":"Quest","description":"Quest in the city center","place":"Trento","type":"City","startdate":"2017-02-03"}]},{"idPerson":12,"firstname":"Dmytro","lastname":"Koval","birthdate":"1994-12-01","activitypreference":[{"idActivity":13,"name":"Snowboarding","description":"Snowboarding in Alpines","place":"Dolimities, Italy","type":"Sport","startdate":"2017-01-01"},{"idActivity":14,"name":"Skiing","description":"Skiing in Carpathian mountains","place":"Carpathy, Ukraine","type":"Sport","startdate":"2017-02-01"}]}]
+
+Request #1:
+Header:
+GET person Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+[ {
+  "idPerson" : 1,
+  "firstname" : "Ivan",
+  "lastname" : "Chernukha",
+  "birthdate" : "1995-07-03",
+  "activitypreference" : [ {
+    "idActivity" : 2,
+    "name" : "Studying",
+    "description" : "Studying concurrency for the 2nd apello",
+    "place" : "UniTrento",
+    "type" : "University",
+    "startdate" : "2017-01-22"
+  }, {
+    "idActivity" : 3,
+    "name" : "Hunting",
+    "description" : "Hunting in forest for boars and foxes",
+    "place" : "Koriukivka, Ukraine",
+    "type" : "Extreme",
+    "startdate" : "2012-11-10"
+  } ]
+}, {
+  "idPerson" : 4,
+  "firstname" : "Oleg",
+  "lastname" : "Matios",
+  "birthdate" : "1990-09-30",
+  "activitypreference" : [ {
+    "idActivity" : 5,
+    "name" : "Bungee jumping",
+    "description" : "Bungee jumping from a high building in New York",
+    "place" : "New York",
+    "type" : "Extreme",
+    "startdate" : "2018-01-18"
+  }, {
+    "idActivity" : 6,
+    "name" : "Escape room",
+    "description" : "Escape from Palazzo delle Albere",
+    "place" : "Palazzo delle Albere, Trento",
+    "type" : "Social",
+    "startdate" : "2017-01-01"
+  } ]
+}, {
+  "idPerson" : 7,
+  "firstname" : "Nicol",
+  "lastname" : "Vecchia",
+  "birthdate" : "1998-04-22",
+  "activitypreference" : [ {
+    "idActivity" : 8,
+    "name" : "Exhibition",
+    "description" : "A new exhibition of a great painter",
+    "place" : "Buonconsiglio Castle, Trento",
+    "type" : "City",
+    "startdate" : "2017-01-01"
+  } ]
+}, {
+  "idPerson" : 9,
+  "firstname" : "Sofia",
+  "lastname" : "Alzetta",
+  "birthdate" : "1985-05-05",
+  "activitypreference" : [ {
+    "idActivity" : 10,
+    "name" : "Resort",
+    "description" : "Resort on Bali island",
+    "place" : "Bali, Indonesia",
+    "type" : "Social",
+    "startdate" : "2015-07-14"
+  }, {
+    "idActivity" : 11,
+    "name" : "Quest",
+    "description" : "Quest in the city center",
+    "place" : "Trento",
+    "type" : "City",
+    "startdate" : "2017-02-03"
+  } ]
+}, {
+  "idPerson" : 12,
+  "firstname" : "Dmytro",
+  "lastname" : "Koval",
+  "birthdate" : "1994-12-01",
+  "activitypreference" : [ {
+    "idActivity" : 13,
+    "name" : "Snowboarding",
+    "description" : "Snowboarding in Alpines",
+    "place" : "Dolimities, Italy",
+    "type" : "Sport",
+    "startdate" : "2017-01-01"
+  }, {
+    "idActivity" : 14,
+    "name" : "Skiing",
+    "description" : "Skiing in Carpathian mountains",
+    "place" : "Carpathy, Ukraine",
+    "type" : "Sport",
+    "startdate" : "2017-02-01"
+  } ]
+} ]
+
+
+Request #2:
+Header:
+GET person/1 Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+{
+  "idPerson" : 1,
+  "firstname" : "Ivan",
+  "lastname" : "Chernukha",
+  "birthdate" : "1995-07-03",
+  "activitypreference" : [ {
+    "idActivity" : 2,
+    "name" : "Studying",
+    "description" : "Studying concurrency for the 2nd apello",
+    "place" : "UniTrento",
+    "type" : "University",
+    "startdate" : "2017-01-22"
+  }, {
+    "idActivity" : 3,
+    "name" : "Hunting",
+    "description" : "Hunting in forest for boars and foxes",
+    "place" : "Koriukivka, Ukraine",
+    "type" : "Extreme",
+    "startdate" : "2012-11-10"
+  } ]
+}
+
+Name has been changed to: Yaroslav
+Request #3:
+Header:
+PUT person/1 Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+{
+  "idPerson" : 1,
+  "firstname" : "Yaroslav",
+  "lastname" : "Chernukha",
+  "birthdate" : "1995-07-03",
+  "activitypreference" : [ {
+    "idActivity" : 2,
+    "name" : "Studying",
+    "description" : "Studying concurrency for the 2nd apello",
+    "place" : "UniTrento",
+    "type" : "University",
+    "startdate" : "2017-01-22"
+  }, {
+    "idActivity" : 3,
+    "name" : "Hunting",
+    "description" : "Hunting in forest for boars and foxes",
+    "place" : "Koriukivka, Ukraine",
+    "type" : "Extreme",
+    "startdate" : "2012-11-10"
+  } ]
+}
+
+
+Request #4:
+Header:
+POST person Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+{
+  "idPerson" : 15,
+  "firstname" : "Leo",
+  "lastname" : "Da Vinci",
+  "birthdate" : "1994-04-14",
+  "activitypreference" : [ {
+    "idActivity" : 16,
+    "name" : "Football",
+    "description" : "Playing for footbal club A.S. Roma",
+    "place" : "Rome",
+    "type" : "Sport",
+    "startdate" : "2010-10-10"
+  } ]
+}
+
+New person id: 15
+
+Request #5:
+Header:
+DELETE person/15 Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 404 Not Found
+Body:
+{ }
+
+
+Request #6:
+Header:
+GET activity_types Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+{
+  "activity_type" : [ "Sport", "Social", "University", "City", "Extreme" ],
+  "activityType" : [ "Sport", "Social", "University", "City", "Extreme" ]
+}
+
+
+Request #7:
+Header:
+GET person/1/Sport Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+[ ]
+
+
+Request #7:
+Header:
+GET person/1/Social Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+[ ]
+
+
+Request #7:
+Header:
+GET person/1/University Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+[ {
+  "idActivity" : 2,
+  "name" : "Studying",
+  "description" : "Studying concurrency for the 2nd apello",
+  "place" : "UniTrento",
+  "type" : "University",
+  "startdate" : "2017-01-22"
+} ]
+
+
+Request #7:
+Header:
+GET person/1/City Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+[ ]
+
+
+Request #7:
+Header:
+GET person/1/Extreme Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+[ {
+  "idActivity" : 3,
+  "name" : "Hunting",
+  "description" : "Hunting in forest for boars and foxes",
+  "place" : "Koriukivka, Ukraine",
+  "type" : "Extreme",
+  "startdate" : "2012-11-10"
+} ]
+
+
+Request #7:
+Header:
+GET person/12/Sport Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+[ {
+  "idActivity" : 13,
+  "name" : "Snowboarding",
+  "description" : "Snowboarding in Alpines",
+  "place" : "Dolimities, Italy",
+  "type" : "Sport",
+  "startdate" : "2017-01-01"
+}, {
+  "idActivity" : 14,
+  "name" : "Skiing",
+  "description" : "Skiing in Carpathian mountains",
+  "place" : "Carpathy, Ukraine",
+  "type" : "Sport",
+  "startdate" : "2017-02-01"
+} ]
+
+
+Request #7:
+Header:
+GET person/12/Social Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+[ ]
+
+
+Request #7:
+Header:
+GET person/12/University Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+[ ]
+
+
+Request #7:
+Header:
+GET person/12/City Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+[ ]
+
+
+Request #7:
+Header:
+GET person/12/Extreme Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: ERROR
+=> HTTP Status: 200 OK
+Body:
+[ ]
+
+Request 7 is OK, there were 4 activities.
+Selected activities: id: 13 type: Sport
+
+Request #8:
+Header:
+GET person/12/Sport/13 Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+[ {
+  "idActivity" : 13,
+  "name" : "Snowboarding",
+  "description" : "Snowboarding in Alpines",
+  "place" : "Dolimities, Italy",
+  "type" : "Sport",
+  "startdate" : "2017-01-01"
+} ]
+
+
+Request #7:
+Header:
+GET person/1/Sport Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+[ ]
+
+
+Request #9:
+Header:
+POST person/1/Sport Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+[ {
+  "idActivity" : 2,
+  "name" : "Studying",
+  "description" : "Studying concurrency for the 2nd apello",
+  "place" : "UniTrento",
+  "type" : "University",
+  "startdate" : "2017-01-22"
+}, {
+  "idActivity" : 3,
+  "name" : "Hunting",
+  "description" : "Hunting in forest for boars and foxes",
+  "place" : "Koriukivka, Ukraine",
+  "type" : "Extreme",
+  "startdate" : "2012-11-10"
+}, {
+  "idActivity" : 17,
+  "name" : "Swimming",
+  "description" : "Swimming in the river",
+  "place" : "Adige river",
+  "type" : "Sport",
+  "startdate" : "2017-12-28"
+} ]
+
+
+Request #7:
+Header:
+GET person/1/Sport Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+[ {
+  "idActivity" : 17,
+  "name" : "Swimming",
+  "description" : "Swimming in the river",
+  "place" : "Adige river",
+  "type" : "Sport",
+  "startdate" : "2017-12-28"
+} ]
+
+Request #9: OK
+
+Request #10:
+Header:
+PUT person/12/Sport/13 Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+[ ]
+
+
+Request #10:
+Header:
+GET person/12 Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: OK
+=> HTTP Status: 200 OK
+Body:
+{
+  "idPerson" : 12,
+  "firstname" : "Dmytro",
+  "lastname" : "Koval",
+  "birthdate" : "1994-12-01",
+  "activitypreference" : [ {
+    "idActivity" : 13,
+    "name" : "Swimming",
+    "description" : "Swimming in the river",
+    "place" : "Adige river",
+    "type" : "Extreme",
+    "startdate" : "2017-12-28"
+  }, {
+    "idActivity" : 14,
+    "name" : "Skiing",
+    "description" : "Skiing in Carpathian mountains",
+    "place" : "Carpathy, Ukraine",
+    "type" : "Sport",
+    "startdate" : "2017-02-01"
+  } ]
+}
+
+
+Request #11:
+Header:
+GET person/12/Sport/?before=2015-01-01&after=2018-01-01 Accept: APPLICATION/JSON Content-Type: APPLICATION/JSON
+=> Result: ERROR
+=> HTTP Status: 404 Not Found
+Body:
+[ ]
+

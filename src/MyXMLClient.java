@@ -219,7 +219,7 @@ public class MyXMLClient {
 	        	result = "ERROR";
 	        }
 	        System.out.print("Name has been changed to: " + newName);
-	        requestNumber = 2;
+	        requestNumber = 3;
 	        printResponce(requestNumber, result, resp, responseStr, path, requestType);
 	        
 	        

@@ -107,5 +107,30 @@
 			</fileset>
 		</copy>
 	</target>
+	
+	<target name="execute.client" depends="compile">
+		<echo message="Evaluating requests and writing to log file XML REST output..." />
+		  <record name="client-server-json.log" emacsmode="true" action="start"/>
+		 <java classname="MyJsonClient" classpath="${build.dir}">
+						<classpath>
+							<fileset dir="${lib.dir}">
+								<include name="**/*.jar" />
+								<include name="*.jar" />
+							</fileset>
+						</classpath>
+		</java>
+		  <record name="client-server-json.log" action="stop"/>  
+		 <record name="client-server-xml.log" emacsmode="true" action="start"/>
+				<java classname="MyXMLClient" classpath="${build.dir}">
+								<classpath>
+									<fileset dir="${lib.dir}">
+										<include name="**/*.jar" />
+										<include name="*.jar" />
+									</fileset>
+								</classpath>
+				</java>
+				<record name="client-server-xml.log" action="stop"/> 
+	</target>
+	
 
 </project>
